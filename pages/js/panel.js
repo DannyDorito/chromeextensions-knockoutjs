@@ -48,11 +48,11 @@ $(function () {
 				if (typeof window.require === 'function') {
 					try {
 						ko = require('ko');
-					} catch (e) { /*ingore */ }
+					} catch (e) { /*ignore */ }
 					if (!ko) {
 						try {
 							ko = require('knockout');
-						} catch (e) { /*ingore */ }
+						} catch (e) { /*ignore */ }
 					}
 				}
 				if (!ko) {
@@ -77,7 +77,7 @@ $(function () {
 			ko.extenders.ChromeExtensionLogChange = chromeExtensionLogChangeFun;
 
 
-			//crazy code that will loop all nodes an get all the knockout binded viewmodels on a page
+			//crazy code that will loop all nodes an get all the knockout bound viewmodels on a page
 			var viewModels = [];
 			var items = document.getElementsByTagName("*");
 			for (var i = 0; i < items.length; i++) {
@@ -98,7 +98,7 @@ $(function () {
 			if (!viewModels.length) {
 				return;
 			}
-			//add extender to each observable/array/computed that will log changes 
+			//add extender to each observable/array/computed that will log changes
 			for (var k = 0; k < viewModels.length; k++) {
 				var tempVm = viewModels[k].viewmodel;
 				var nestingLevel = viewModels[k].level;

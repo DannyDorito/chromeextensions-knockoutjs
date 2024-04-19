@@ -36,13 +36,13 @@ var page_getKnockoutInfo = function (shouldSerialize) {
 				if ((isDefinedAvailable && require.defined('ko')) || !isDefinedAvailable) {
 					ko = require('ko');
 				}
-			} catch (e) { /*ingore */ }
+			} catch (e) { /*ignore */ }
 			if (!ko) {
 				try {
 					if ((isDefinedAvailable && require.defined('knockout')) || !isDefinedAvailable) {
 						ko = require('knockout');
 					}
-				} catch (e) { /*ingore */ }
+				} catch (e) { /*ignore */ }
 			}
 		}
 		// could not find ko library instance with window nor require.
@@ -160,11 +160,11 @@ var createEditMethods = function () {
 		if (typeof window.require === 'function') {
 			try {
 				ko = require('ko');
-			} catch (e) { /*ingore */ }
+			} catch (e) { /*ignore */ }
 			if (!ko) {
 				try {
 					ko = require('knockout');
-				} catch (e) { /*ingore */ }
+				} catch (e) { /*ignore */ }
 			}
 		}
 		if (!ko) {
@@ -215,7 +215,7 @@ catch (e) {
 chrome.devtools.panels.elements.createSidebarPane(pluginTitle, function (sidebar) {
 	"use strict";
 	function updateElementProperties() {
-		//pase a function as a string that will be executed later on by chrome
+		//pass a function as a string that will be executed later on by chrome
 		sidebar.setExpression("(" + page_getKnockoutInfo.toString() + ")(" + shouldDoKOtoJS + ")");
 
 
@@ -229,7 +229,7 @@ chrome.devtools.panels.elements.createSidebarPane(pluginTitle, function (sidebar
 	chrome.devtools.panels.elements.onSelectionChanged.addListener(updateElementProperties);
 	sidebar.onShown.addListener(updateElementProperties);
 
-	//listen to a message send by the background page (when the chrome windows's focus changes) 
+	//listen to a message send by the background page (when the chrome windows's focus changes)
 	chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 		updateElementProperties();
 	});
