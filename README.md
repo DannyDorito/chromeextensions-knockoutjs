@@ -3,7 +3,7 @@ chromeextensions-knockoutjs
 
 The source code for the chrome dev tools extension that allows you to easily debug knockout js apps.
 
-Extension in Chrome App Store: https://chrome.google.com/webstore/detail/knockoutjs-context-debugg/oddcpmchholgcjgjdnfjmildmlielhof
+Extension in Chrome App Store: [Knockoutjs context debugger](https://chromewebstore.google.com/detail/knockoutjs-context-debugg/plomponkmimcpdlpekioencoekefkjkn)
 
 See the context in the sidebar of the elements panel
 ![Sidebar in elements panel](https://lh3.googleusercontent.com/P3WvrKqklL-j5cEBeGSNzUDv0seUxyEI6vc0a0SULABfChhWVwB0yARQuzHNtZGuj30nl4cRhA=s640-h400-e365-rw)
