@@ -151,7 +151,13 @@ var page_getKnockoutInfo = function (shouldSerialize) {
 	catch (error) {
 		copy["error"] = error;
 	}
-	return copy;
+	var ordered = {};
+
+	Object.keys(copy).sort().forEach(function(key) {
+		ordered[key] = copy[key];
+	  });
+
+	return ordered;
 };
 
 var createEditMethods = function () {
