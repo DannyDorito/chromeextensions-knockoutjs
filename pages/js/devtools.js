@@ -131,11 +131,11 @@ var page_getKnockoutInfo = function (shouldSerialize) {
 					if (shouldSerialize) {//if you don't serialize, the isFunction check is useless cause observables are functions
 						if (!isFunction(data[props2[i]])) {
 							//chrome sorts alphabetically, make sure the properties come first
-							copy[" " + props2[i]] = data[props2[i]];
+							copy[props2[i]] = data[props2[i]];
 						}
 					}
 					else {
-						copy[" " + props2[i]] = ko.utils.unwrapObservable(data[props2[i]]);
+						copy[props2[i]] = ko.utils.unwrapObservable(data[props2[i]]);
 					}
 				}
 				//set the whole vm in a expression (collapsable). contains even the functions.
