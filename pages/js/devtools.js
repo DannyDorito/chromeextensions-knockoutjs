@@ -28,6 +28,10 @@ var page_getKnockoutInfo = function (shouldSerialize) {
 	};
 	var ko = window.ko;
 
+	if (!ko && typeof window.knockout !== "undefined") {
+		ko = window.knockout;
+	}
+
 	if (!ko) {
 		// try fetching ko with requirejs
 		if (typeof window.require === 'function') {
@@ -49,7 +53,7 @@ var page_getKnockoutInfo = function (shouldSerialize) {
 		// Then fallback to this message, print to console
 		if (!ko) {
 			knockoutNotFoundDisclaimer()
-			return { error: "Knockout.js was not found at global context (window.ko) nor through require.js (require.defined('ko')/require.defined('knockout')). For details please see console output." };
+			return { error: "Knockout.js was not found at global context (window.ko/window.knockout) nor through require.js (require.defined('ko')/require.defined('knockout')). For details please see console output." };
 		}
 	}
 
