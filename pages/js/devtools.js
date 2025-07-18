@@ -1,5 +1,5 @@
 // The function is executed in the context of the inspected page.
-var page_getKnockoutInfo = function (shouldSerialize) {
+const page_getKnockoutInfo = function (shouldSerialize) {
 	"use strict";
 	/**
 	 * Print to console a disclaimer that
@@ -16,17 +16,17 @@ var page_getKnockoutInfo = function (shouldSerialize) {
 			"If you are using ECMA module imports, make sure knockout is available at global context with:"
 		)
 		console.log(`
-			import ko from "knockout"
-			...
-			window.ko = ko;
-		`)
+            import ko from "knockout"
+            ...
+            window.ko = ko;
+        `)
 		console.groupEnd(label)
 	};
 
-	var debug = function (m) {
+	const debug = function (m) {
 		//console.log(m);
 	};
-	var ko = window.ko;
+	let ko = window.ko;
 
 	if (!ko && typeof window.knockout !== "undefined") {
 		ko = window.knockout;
@@ -35,7 +35,7 @@ var page_getKnockoutInfo = function (shouldSerialize) {
 	if (!ko) {
 		// try fetching ko with requirejs
 		if (typeof window.require === 'function') {
-			var isDefinedAvailable = typeof window.require.defined === 'function';
+			const isDefinedAvailable = typeof window.require.defined === 'function';
 			try {
 				if ((isDefinedAvailable && require.defined('ko')) || !isDefinedAvailable) {
 					ko = require('ko');
@@ -57,27 +57,27 @@ var page_getKnockoutInfo = function (shouldSerialize) {
 		}
 	}
 
-	var isString = function (obj) {	// _ implementation
+	const isString = function (obj) {	// _ implementation
 		return toString.call(obj) == '[object String]';
 	};
 
 	function isFunction(functionToCheck) {
-		var getType = {};
-		var res = functionToCheck && getType.toString.call(functionToCheck) == '[object Function]';
+		const getType = {};
+		const res = functionToCheck && getType.toString.call(functionToCheck) == '[object Function]';
 		return res;
 	}
 
-	var i = 0;
+	let i = 0;
 	// Make a shallow copy with a null prototype, don't show prototype stuff in panel
-	var copy = { __proto__: null };
-	var copy2 = { __proto__: null };
+	const copy = { __proto__: null };
+	const copy2 = { __proto__: null };
 	debug($0);
-	var context = $0 ? ko.contextFor($0) : {};
+	const context = $0 ? ko.contextFor($0) : {};
 	debug("context ");
 	debug(context);
 
 	try {
-		var props = Object.getOwnPropertyNames(context);
+		const props = Object.getOwnPropertyNames(context);
 		for (i = 0; i < props.length; ++i) {
 			//you probably want to see the value of the index instead of the ko.observable function
 			if (props[i] === "$index") {
@@ -119,15 +119,15 @@ var page_getKnockoutInfo = function (shouldSerialize) {
 	}
 
 	try {
-		var dataFor = $0 ? ko.dataFor($0) : {};
-		var data = shouldSerialize ? ko.toJS(dataFor) : ko.utils.unwrapObservable(dataFor);
+		const dataFor = $0 ? ko.dataFor($0) : {};
+		const data = shouldSerialize ? ko.toJS(dataFor) : ko.utils.unwrapObservable(dataFor);
 
 		if (isString(data)) {	//don't do getOwnPropertyNames if it's not an object
 			copy["vm_string"] = data;
 		}
 		else {
 			try {
-				var props2 = Object.getOwnPropertyNames(data);
+				const props2 = Object.getOwnPropertyNames(data);
 				for (i = 0; i < props2.length; ++i) {
 					//create a empty object that contains the whole vm in a expression. contains even the functions.
 					copy2[props2[i]] = ko.utils.unwrapObservable(data[props2[i]]);
@@ -155,17 +155,17 @@ var page_getKnockoutInfo = function (shouldSerialize) {
 	catch (error) {
 		copy["error"] = error;
 	}
-	var ordered = {};
+	const ordered = {};
 
-	Object.keys(copy).sort().forEach(function(key) {
+	Object.keys(copy).sort().forEach(function (key) {
 		ordered[key] = copy[key];
-	  });
+	});
 
 	return ordered;
 };
 
-var createEditMethods = function () {
-	var ko = window.ko;
+const createEditMethods = function () {
+	let ko = window.ko;
 	if (!ko) {
 		if (typeof window.require === 'function') {
 			try {
@@ -197,11 +197,11 @@ var createEditMethods = function () {
 	catch (e) {
 	}
 };
-var pluginTitle = "Knockout context";
-var shouldDoKOtoJS = true;
-var localStorageError = "Unable to get value from localstorage. Check the privacy settings of chrome";
+const pluginTitle = "Knockout context";
+let shouldDoKOtoJS = true;
+const localStorageError = "Unable to get value from localstorage. Check the privacy settings of chrome";
 try {
-	var shouldDoKOtoJSValue = localStorage["shouldDoKOtoJS"];
+	const shouldDoKOtoJSValue = localStorage["shouldDoKOtoJS"];
 	if (shouldDoKOtoJSValue)
 		shouldDoKOtoJS = JSON.parse(shouldDoKOtoJSValue);
 }
@@ -210,8 +210,8 @@ catch (e) {
 }
 
 
-var shouldAddEditMethodsValue = undefined;
-var shouldAddEditMethod = false;
+let shouldAddEditMethodsValue = undefined;
+let shouldAddEditMethod = false;
 try {
 	shouldAddEditMethodsValue = localStorage["shouldAddEditMethods"];
 	if (shouldAddEditMethodsValue)
@@ -246,18 +246,18 @@ chrome.devtools.panels.elements.createSidebarPane(pluginTitle, function (sidebar
 });
 
 
-var localStorageValue = undefined;
+let localStorageValue = undefined;
 try {
 	localStorageValue = localStorage["shouldPanelBeShown"];
 }
 catch (e) {
 	console.log(localStorageError, e);
 }
-var shouldPanelBeShown = true;
+let shouldPanelBeShown = true;
 if (localStorageValue)
 	shouldPanelBeShown = JSON.parse(localStorageValue);
 if (shouldPanelBeShown) {
-	var knockoutPanel = chrome.devtools.panels.create(
+	const knockoutPanel = chrome.devtools.panels.create(
 		"KnockoutJS",
 		"logo.png",
 		"/pages/panel.html"

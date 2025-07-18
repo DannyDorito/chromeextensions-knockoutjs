@@ -1,7 +1,6 @@
-
 $(function () {
 	//abstraction wrapper around extension api, stolen from batarang :)
-	var chromeExtension = {
+	const chromeExtension = {
 		sendRequest: function (requestName, cb) {
 			chrome.runtime.sendMessage({
 				script: requestName,
@@ -24,7 +23,7 @@ $(function () {
 				'));', cb);
 		},
 		watchRefresh: function (cb) {
-			var port = chrome.runtime.connect();
+			const port = chrome.runtime.connect();
 			port.postMessage({
 				action: 'register',
 				inspectedTabId: chrome.devtools.inspectedWindow.tabId
@@ -39,11 +38,11 @@ $(function () {
 			});
 		}
 	};
-	var attachLoggingExtender = function (globalWindowObj) {
+	const attachLoggingExtender = function (globalWindowObj) {
 		try {
 
 			//require js support
-			var ko = window.ko;
+			let ko = window.ko;
 			if (!ko) {
 				if (typeof window.require === 'function') {
 					try {
@@ -61,10 +60,10 @@ $(function () {
 			}
 
 			//create the extender in the context of the page
-			var chromeExtensionLogChangeFun = function (target, option) {
-				var indent = "   ";
-				var total = "";
-				for (var i = 0; i < option.nestingLevel; i++) {
+			const chromeExtensionLogChangeFun = function (target, option) {
+				const indent = "   ";
+				let total = "";
+				for (let i = 0; i < option.nestingLevel; i++) {
 					total += indent;
 				}
 
@@ -78,15 +77,15 @@ $(function () {
 
 
 			//crazy code that will loop all nodes an get all the knockout bound viewmodels on a page
-			var viewModels = [];
-			var items = document.getElementsByTagName("*");
-			for (var i = 0; i < items.length; i++) {
+			const viewModels = [];
+			const items = document.getElementsByTagName("*");
+			for (let i = 0; i < items.length; i++) {
 				try {
-					var theContextFor = ko.contextFor(items[i]);
-					var theVm = theContextFor.$data;
-					var theNestingLevel = theContextFor.$parents.length;
-					var isAlreadyInArray = false;
-					for (var j = 0; j < viewModels.length; j++)
+					const theContextFor = ko.contextFor(items[i]);
+					const theVm = theContextFor.$data;
+					const theNestingLevel = theContextFor.$parents.length;
+					let isAlreadyInArray = false;
+					for (let j = 0; j < viewModels.length; j++)
 						if (viewModels[j].viewmodel == theVm)
 							isAlreadyInArray = true;
 					if (!isAlreadyInArray)
@@ -99,10 +98,10 @@ $(function () {
 				return;
 			}
 			//add extender to each observable/array/computed that will log changes
-			for (var k = 0; k < viewModels.length; k++) {
-				var tempVm = viewModels[k].viewmodel;
-				var nestingLevel = viewModels[k].level;
-				for (var vmProperty in tempVm) {
+			for (let k = 0; k < viewModels.length; k++) {
+				const tempVm = viewModels[k].viewmodel;
+				const nestingLevel = viewModels[k].level;
+				for (const vmProperty in tempVm) {
 					try {
 						if (!tempVm.hasOwnProperty(vmProperty))
 							continue;
@@ -123,7 +122,7 @@ $(function () {
 		}
 	};
 
-	var chromeExtensionEvalCallback = function (promise) {
+	const chromeExtensionEvalCallback = function (promise) {
 		//disable the button so you can only attach the extender once
 		$("#enableTracing").text("Tracing enabled").attr("disabled", "disabled");
 	};

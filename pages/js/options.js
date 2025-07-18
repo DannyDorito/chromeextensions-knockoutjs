@@ -1,20 +1,19 @@
-
 $(function () {
-	var shouldPanelBeShownKey = "shouldPanelBeShown";
-	var shouldDoKOtoJSKey = "shouldDoKOtoJS";
-	var shouldAddEditMethodsKey = "shouldAddEditMethods";
+	const shouldPanelBeShownKey = "shouldPanelBeShown";
+	const shouldDoKOtoJSKey = "shouldDoKOtoJS";
+	const shouldAddEditMethodsKey = "shouldAddEditMethods";
 
-	var restorePreviousSettings = function () {
+	const restorePreviousSettings = function () {
 
-		var checkBoxes = [
+		const checkBoxes = [
 			{ settingKey: shouldPanelBeShownKey, domSelector: "#shouldPanelBeShownCheckbox", defaultValue: true },
 			{ settingKey: shouldDoKOtoJSKey, domSelector: "#shouldDoKOtoJSCheckbox", defaultValue: true },
 			{ settingKey: shouldAddEditMethodsKey, domSelector: "#shouldAddEditMethodsCheckbox", defaultValue: false },
 		];
 		$.each(checkBoxes, function (i, val) {
-			var localStorageValue = localStorage[val.settingKey];
+			const localStorageValue = localStorage[val.settingKey];
 			if (localStorageValue) {
-				var settingValue = JSON.parse(localStorageValue);
+				const settingValue = JSON.parse(localStorageValue);
 				$(val.domSelector).attr('checked', settingValue);
 			}
 			else {
@@ -23,7 +22,7 @@ $(function () {
 		});
 	};
 
-	var setValueSafelyInLocalStorage = function (key, notStringifiedValue) {
+	const setValueSafelyInLocalStorage = function (key, notStringifiedValue) {
 		try {
 			localStorage[key] = JSON.stringify(notStringifiedValue);
 			$("#infoMessage").closest(".alert").removeClass("alert-danger");
@@ -40,12 +39,12 @@ $(function () {
 
 	restorePreviousSettings();
 
-	var $infoMessage = $("#infoMessage");
+	const $infoMessage = $("#infoMessage");
 	//when checkbox changes, directly save value in localstorage
 	$("#shouldPanelBeShownCheckbox").change(function () {
 		$(".alert").removeClass("d-none");
-		var el = $(this);
-		var val = el.is(':checked');
+		const el = $(this);
+		const val = el.is(':checked');
 		if (setValueSafelyInLocalStorage(shouldPanelBeShownKey, val)) {
 			if (val) {
 				$infoMessage.html("Happy tracing");
@@ -57,14 +56,14 @@ $(function () {
 	});
 
 	$("#shouldDoKOtoJSCheckbox").change(function () {
-		var el = $(this);
-		var val = el.is(':checked');
+		const el = $(this);
+		const val = el.is(':checked');
 		setValueSafelyInLocalStorage(shouldDoKOtoJSKey, val);
 	});
 
 	$("#shouldAddEditMethodsCheckbox").change(function () {
-		var el = $(this);
-		var val = el.is(':checked');
+		const el = $(this);
+		const val = el.is(':checked');
 		setValueSafelyInLocalStorage(shouldAddEditMethodsKey, val);
 	});
 
